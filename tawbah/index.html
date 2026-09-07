@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <!--
+      SVG first for browsers that take it; a PNG beside it because Google's
+      favicon documentation does not list SVG among the formats it states
+      support for, and the icon next to an Arabic search result matters.
+      apple-touch-icon stops iOS screenshotting the page on "add to home
+      screen", which for this site is a screenshot somebody would not want on
+      their phone. All are generated from favicon.svg by `npm run og`.
+    -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <!--
+      One theme-color, set from the saved theme by the script below and kept in
+      step by src/hooks/useTheme.ts. Media-query variants would follow the OS
+      instead, and the theme here is a choice that can disagree with it. The two
+      values are --color-ink-50 and --color-ink-950 from src/index.css, resolved
+      to sRGB.
+    -->
+    <meta name="theme-color" content="#f8fafc" />
+    <meta name="description" content="إن كنتَ قد وقعتَ فهذا بابك: أربعُ خطواتٍ تفعلها في الدقائق العشر القادمة، وجوابٌ عن السؤالين اللذين يوقفان أكثر الناس. بلا لومٍ ولا تأنيب." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://fyoay.com/tawbah/" />
+    <link rel="canonical" href="https://fyoay.com/tawbah/" />
+    <meta property="og:locale" content="ar_AR" />
+    <meta property="og:site_name" content="لك أم عليك" />
+    <!--
+      og:image itself is not here: it has to be absolute, because a link-preview
+      crawler has no base to resolve against, and the origin is only known to
+      site.config.mjs. scripts/prerender-routes.mjs inserts it above this line
+      for every built page, and throws if this tag ever stops matching.
+    -->
+    <meta property="og:image" content="https://fyoay.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta
+      property="og:image:alt"
+      content="لك أم عليك · اجعل هذه اللحظة شاهدةً لك لا عليك"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:title" content="التوبة · لك أم عليك" />
+    <meta property="og:description" content="إن كنتَ قد وقعتَ فهذا بابك: أربعُ خطواتٍ تفعلها في الدقائق العشر القادمة، وجوابٌ عن السؤالين اللذين يوقفان أكثر الناس. بلا لومٍ ولا تأنيب." />
+    <title>التوبة · لك أم عليك</title>
+    <script>
+      // Apply the saved theme before the first paint, so there is no flash of
+      // the wrong colours. On this site that flash is worse than cosmetic: a
+      // white screen at three in the morning is the opposite of what somebody
+      // opening this page needs. The React side reads it back from here
+      // (src/hooks/useTheme.ts).
+      ;(function () {
+        try {
+          var saved = localStorage.getItem('fyoay-theme')
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var isDark = saved ? saved === 'dark' : prefersDark
+          document.documentElement.classList.toggle('dark', isDark)
+          document
+            .querySelector('meta[name="theme-color"]')
+            .setAttribute('content', isDark ? '#0a1417' : '#f8fafc')
+        } catch (e) {
+          /* private browsing: fall back to the light theme */
+        }
+      })()
+    </script>
+
+    <!--
+      The boot placeholder, styled here rather than in src/index.css so it needs
+      nothing but the HTML itself. React's createRoot clears #root on mount, so
+      this is only ever on screen while the JavaScript is still arriving.
+
+      It fades in after 400ms. On a normal connection the app is up before that
+      and nobody sees it; a placeholder that flashes for 80ms is worse than
+      none. On a slow one it replaces a blank page, and this is a site where a
+      blank page for two seconds is two seconds somebody spends alone with the
+      thing they opened it to escape.
+    -->
+    <style>
+      .boot {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background: #f8fafc;
+        font-family: 'Cairo Variable', system-ui, sans-serif;
+        color: #535c61;
+        opacity: 0;
+        animation: boot-in 0.3s ease 0.4s forwards;
+      }
+      .dark .boot {
+        background: #0a1417;
+        color: #9ca4a8;
+      }
+      .boot-ring {
+        width: 2.25rem;
+        height: 2.25rem;
+        border: 3px solid #e1e6e8;
+        border-top-color: #237e7f;
+        border-radius: 50%;
+        animation: boot-spin 0.9s linear infinite;
+      }
+      .dark .boot-ring {
+        border-color: #202a2e;
+        border-top-color: #389b9c;
+      }
+      .boot-text {
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+      @keyframes boot-in {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes boot-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      /* Someone who has asked for less motion gets the words, not the spinner. */
+      @media (prefers-reduced-motion: reduce) {
+        .boot {
+          animation: none;
+          opacity: 1;
+        }
+        .boot-ring {
+          display: none;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-b9ciMIT4.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/usePageTitle-CNWrxr_c.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BTUEH_uX.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/cairo-arabic-wght-normal-CJWMIGCx.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/amiri-quran-arabic-400-normal-wRcqfVJx.woff2" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"لك أم عليك","item":"https://fyoay.com/"},{"@type":"ListItem","position":2,"name":"التوبة","item":"https://fyoay.com/tawbah/"}]}</script>
+  </head>
+  <body>
+    <div id="root">
+      <div class="boot" role="status">
+        <span class="boot-ring" aria-hidden="true"></span>
+        <span class="boot-text">لحظة…</span>
+      </div>
+    </div>
+  </body>
+</html>

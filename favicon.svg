@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- The site mark: a balance whose right pan has risen. Kept in step with
+       src/components/layout/Logo.tsx, which is the same geometry with the
+       colours taken from the theme instead of written in. -->
+  <rect width="32" height="32" rx="7" fill="#0a1417"/>
+  <g fill="none" stroke="#5ab7b7" stroke-width="1.9" stroke-linecap="round">
+    <path d="M16 11.5V26M10.5 26.5h11"/>
+    <path d="M5.5 13.5 26.5 9.5"/>
+  </g>
+  <path d="M5.5 13.8v3.2M2.4 17a3.3 3.3 0 0 0 6.2 0" fill="none" stroke="#5ab7b7"
+        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M26.5 9.8V13M23.4 13.2a3.3 3.3 0 0 0 6.2 0" fill="none" stroke="#d9b66a"
+        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
